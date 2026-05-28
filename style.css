@@ -1,0 +1,450 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+
+    background:#f3f4f6;
+
+    color:#111827;
+
+    padding:20px;
+}
+
+/* LOGIN */
+
+.login-box{
+
+    width:100%;
+    max-width:420px;
+
+    margin:60px auto;
+
+    background:#fff;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.login-box h2{
+
+    text-align:center;
+
+    color:#166534;
+
+    margin-bottom:30px;
+}
+
+.login-box input{
+
+    width:100%;
+
+    padding:16px;
+
+    margin-bottom:18px;
+
+    border:2px solid #ddd;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    outline:none;
+}
+
+.login-box input:focus{
+
+    border-color:#16a34a;
+}
+
+.login-box button{
+
+    width:100%;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#16a34a;
+
+    color:#fff;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* TOPO */
+
+.topo{
+
+    background:#166534;
+
+    color:white;
+
+    padding:25px;
+
+    border-radius:22px;
+
+    text-align:center;
+
+    margin-bottom:20px;
+}
+
+/* INFO */
+
+.info-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+
+    margin-bottom:20px;
+}
+
+.card-info{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    box-shadow:0 4px 14px rgba(0,0,0,0.08);
+}
+
+.titulo-info{
+
+    color:#6b7280;
+
+    margin-bottom:8px;
+}
+
+.tempo,
+.pedido-info{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:#166534;
+}
+
+/* PRODUTOS */
+
+.produto{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:22px;
+
+    margin-bottom:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 4px 14px rgba(0,0,0,0.08);
+}
+
+.produto.especial{
+
+    background:#fff4b8;
+
+    border-left:8px solid #facc15;
+}
+
+.produto-nome{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#111827;
+}
+
+.qtd{
+
+    width:90px;
+
+    height:70px;
+
+    border-radius:18px;
+
+    border:2px solid #d1d5db;
+
+    text-align:center;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    outline:none;
+}
+
+/* BOTAO */
+
+.btn-enviar{
+
+    width:100%;
+
+    padding:20px;
+
+    border:none;
+
+    border-radius:20px;
+
+    background:#16a34a;
+
+    color:white;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    margin-top:20px;
+}
+
+/* MODAL */
+
+.overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.5);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+.modal-box{
+
+    width:90%;
+    max-width:500px;
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:25px;
+}
+
+.modal-box h2{
+
+    margin-bottom:20px;
+}
+
+.linha-conferencia{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:15px;
+
+    font-size:20px;
+}
+
+.btn-confirmar{
+
+    width:100%;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#16a34a;
+
+    color:white;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    margin-top:20px;
+}
+
+.btn-cancelar{
+
+    width:100%;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#9ca3af;
+
+    color:white;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    margin-top:10px;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .info-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .produto-nome{
+
+        font-size:22px;
+    }
+}
+/* ANIMAÇÕES */
+
+@keyframes aparecer{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.05);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+/* APP */
+
+#app{
+
+    animation:aparecer 0.5s ease;
+}
+
+/* PRODUTOS */
+
+.produto{
+
+    animation:aparecer 0.4s ease;
+
+    transition:0.2s;
+}
+
+.produto:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+/* INPUT */
+
+.qtd{
+
+    transition:0.2s;
+}
+
+.qtd:focus{
+
+    border-color:#16a34a;
+
+    transform:scale(1.08);
+
+    box-shadow:0 0 10px rgba(22,163,74,0.3);
+}
+
+/* BOTÃO */
+
+.btn-enviar{
+
+    transition:0.2s;
+}
+
+.btn-enviar:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 20px rgba(22,163,74,0.35);
+}
+
+.btn-enviar:active{
+
+    transform:scale(0.98);
+}
+
+/* TIMER */
+
+.tempo{
+
+    animation:pulse 1s infinite;
+
+    color:#dc2626;
+}
+
+/* LOGIN */
+
+.login-box{
+
+    animation:aparecer 0.5s ease;
+}
+/* ANIMAÇÃO QUANTIDADE */
+
+@keyframes bounce{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.2);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+.qtd.animar{
+
+    animation:bounce 0.25s ease;
+}
