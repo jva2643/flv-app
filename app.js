@@ -56,9 +56,7 @@ async function fazerLogin() {
   const usuarios =
     dados.usuarios;
 
-  if (
-    usuarios[login] == senha
-  ) {
+  if (usuarios[login] == senha) {
 
     lojaAtual = login;
 
@@ -76,6 +74,37 @@ function iniciarApp(produtos) {
 
   document.getElementById("app").innerHTML = `
 
+    <div class="barra-topo-fixa">
+
+      <div class="loja-topo">
+        🏪 Loja: ${lojaAtual}
+      </div>
+
+      <div class="topo-info">
+
+        <div>
+          ⏰ <span id="timer">02:30:00</span>
+        </div>
+
+        <div>
+          📦 <span id="totalItens">0 itens</span>
+        </div>
+
+        <div>
+          🚛 <span id="totalVolumes">0 volumes</span>
+        </div>
+
+      </div>
+
+      <button
+        class="btn-finalizar-topo"
+        onclick="abrirConferencia()"
+      >
+        FINALIZAR PEDIDO
+      </button>
+
+    </div>
+
     <header class="topo">
 
       <h1>Pedidos FLV</h1>
@@ -84,52 +113,7 @@ function iniciarApp(produtos) {
 
     </header>
 
-    <div class="info-grid">
-
-      <div class="card-info">
-
-        <div class="titulo-info">
-          ⏰ Tempo restante
-        </div>
-
-        <div class="tempo" id="timer">
-          02:30:00
-        </div>
-
-      </div>
-
-      <div class="card-info">
-
-        <div class="titulo-info">
-          📦 Pedido
-        </div>
-
-        <div class="pedido-info">
-
-          <span id="totalItens">
-            0 itens
-          </span>
-
-          •
-
-          <span id="totalVolumes">
-            0 volumes
-          </span>
-
-        </div>
-
-      </div>
-
-    </div>
-
     <div id="listaProdutos"></div>
-
-    <button
-      class="btn-enviar"
-      onclick="abrirConferencia()"
-    >
-      ENVIAR PEDIDO
-    </button>
 
     <div id="modal"></div>
 
@@ -177,25 +161,85 @@ function renderizarProdutos(produtos) {
 
         </div>
 
-        <input
-          class="qtd"
-          type="number"
-          min="0"
-          value="0"
-          onchange="
-            alterarQuantidade(
-              ${produto.codigo},
-              '${produto.descricao}',
-              '${produto.custo}',
-              this.value
-            )
-          "
-        >
+        <div class="controle-qtd">
+
+          <button
+            class="btn-qtd"
+            onclick="
+              alterarBotao(
+                ${produto.codigo},
+                '${produto.descricao}',
+                '${produto.custo}',
+                -1,
+                this
+              )
+            "
+          >
+            -
+          </button>
+
+          <input
+            class="qtd"
+            type="number"
+            min="0"
+            value="0"
+            readonly
+          >
+
+          <button
+            class="btn-qtd"
+            onclick="
+              alterarBotao(
+                ${produto.codigo},
+                '${produto.descricao}',
+                '${produto.custo}',
+                1,
+                this
+              )
+            "
+          >
+            +
+          </button>
+
+        </div>
 
       </div>
 
     `;
   });
+}
+
+function alterarBotao(
+  codigo,
+  descricao,
+  custo,
+  valor,
+  botao
+){
+
+  const container =
+    botao.parentElement;
+
+  const input =
+    container.querySelector(".qtd");
+
+  let quantidade =
+    Number(input.value);
+
+  quantidade += valor;
+
+  if (quantidade < 0) {
+    quantidade = 0;
+  }
+
+  input.value = quantidade;
+
+  alterarQuantidade(
+    codigo,
+    descricao,
+    custo,
+    quantidade
+  );
 }
 
 function alterarQuantidade(
@@ -254,13 +298,11 @@ function atualizarResumo() {
   document.getElementById(
     "totalItens"
   ).innerText =
-
     `${totalItens} itens`;
 
   document.getElementById(
     "totalVolumes"
   ).innerText =
-
     `${volumes} volumes`;
 }
 
@@ -333,50 +375,13 @@ function fecharModal() {
 
 async function confirmarPedido() {
 
-  const dados = {
+  alert("Pedido enviado!");
 
-    loja: lojaAtual,
+  pedido = [];
 
-    pedido: pedido
+  fecharModal();
 
-  };
-
-  try {
-
-    await fetch(
-
-      URL_API,
-
-      {
-
-        method: "POST",
-
-        mode: "no-cors",
-
-        body: JSON.stringify(dados)
-
-      }
-
-    );
-
-    alert(
-      "Pedido enviado com sucesso!"
-    );
-
-    pedido = [];
-
-    fecharModal();
-
-    mostrarLogin();
-
-  } catch (erro) {
-
-    console.log(erro);
-
-    alert(
-      "Erro ao enviar pedido"
-    );
-  }
+  mostrarLogin();
 }
 
 function iniciarTimer() {
@@ -390,13 +395,11 @@ function iniciarTimer() {
   setInterval(() => {
 
     const horas =
-
       String(
         Math.floor(tempo / 3600)
       ).padStart(2, "0");
 
     const minutos =
-
       String(
         Math.floor(
           (tempo % 3600) / 60
@@ -404,18 +407,14 @@ function iniciarTimer() {
       ).padStart(2, "0");
 
     const segundos =
-
       String(
         tempo % 60
       ).padStart(2, "0");
 
     timer.innerText =
-
       `${horas}:${minutos}:${segundos}`;
 
     tempo--;
 
   }, 1000);
 }
-
-mostrarLogin();
