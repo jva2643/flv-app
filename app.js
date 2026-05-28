@@ -2,419 +2,293 @@ let pedido = [];
 
 let lojaAtual = "";
 
-const URL_API =
-  "https://script.google.com/macros/s/AKfycbw1V0ga-B1rXoqnBWNHJljH0o4IXK6hdsxucOfQ26mrdAYjmoWNrK2akbeWQIiziiJ3/exec";
-
-function mostrarLogin() {
-
-  document.getElementById("app").innerHTML = `
-
-    <div class="login-box">
-
-      <h2>Login da Loja</h2>
-
-      <input
-        type="text"
-        id="login"
-        placeholder="Usuário"
-      >
-
-      <input
-        type="password"
-        id="senha"
-        placeholder="Senha"
-      >
-
-      <button onclick="fazerLogin()">
-        ENTRAR
-      </button>
-
-    </div>
-
-  `;
-}
-
-async function carregarDados() {
-
-  const resposta =
-    await fetch(URL_API);
-
-  return await resposta.json();
-}
-
 async function fazerLogin() {
 
-  const login =
-    document.getElementById("login").value.trim();
+    const login =
+        document
+        .getElementById("login")
+        .value
+        .trim();
 
-  const senha =
-    document.getElementById("senha").value.trim();
+    const senha =
+        document
+        .getElementById("senha")
+        .value
+        .trim();
 
-  const dados =
-    await carregarDados();
+    if (!login || !senha) {
 
-  const usuarios =
-    dados.usuarios;
+        alert("Preencha login e senha");
 
-  if (usuarios[login] == senha) {
+        return;
+    }
 
     lojaAtual = login;
 
-    iniciarApp(
-      dados.produtos
-    );
-
-  } else {
-
-    alert("Login inválido");
-  }
+    carregarSistema();
 }
 
-function iniciarApp(produtos) {
+function mostrarLogin() {
 
-  document.getElementById("app").innerHTML = `
+    document.getElementById("app").innerHTML = `
 
-    <div class="barra-topo-fixa">
+        <div class="login-box">
 
-      <div class="loja-topo">
-        🏪 Loja: ${lojaAtual}
-      </div>
+            <h2>Login da Loja</h2>
 
-      <div class="topo-info">
+            <input
+                type="text"
+                id="login"
+                placeholder="Usuário"
+            >
 
-        <div>
-          ⏰ <span id="timer">02:30:00</span>
-        </div>
+            <input
+                type="password"
+                id="senha"
+                placeholder="Senha"
+            >
 
-        <div>
-          📦 <span id="totalItens">0 itens</span>
-        </div>
-
-        <div>
-          🚛 <span id="totalVolumes">0 volumes</span>
-        </div>
-
-      </div>
-
-      <button
-        class="btn-finalizar-topo"
-        onclick="abrirConferencia()"
-      >
-        FINALIZAR PEDIDO
-      </button>
-
-    </div>
-
-    <header class="topo">
-
-      <h1>Pedidos FLV</h1>
-
-      <p>Rede Econômica</p>
-
-    </header>
-
-    <div id="listaProdutos"></div>
-
-    <div id="modal"></div>
-
-  `;
-
-  renderizarProdutos(produtos);
-
-  iniciarTimer();
-}
-
-function renderizarProdutos(produtos) {
-
-  const lista =
-    document.getElementById(
-      "listaProdutos"
-    );
-
-  lista.innerHTML = "";
-
-  produtos.forEach(produto => {
-
-    lista.innerHTML += `
-
-      <div class="produto ${produto.especie === 'Tabloide Rede' ? 'especial' : ''}">
-
-        <div>
-
-          <div class="produto-nome">
-            ${produto.descricao}
-          </div>
-
-          <div style="
-            margin-top:6px;
-            color:#6b7280;
-            font-size:15px;
-          ">
-
-            Cód: ${produto.codigo}
-            •
-            ${produto.especie}
-            •
-            R$ ${produto.custo}
-
-          </div>
+            <button onclick="fazerLogin()">
+                ENTRAR
+            </button>
 
         </div>
-
-        <div class="controle-qtd">
-
-          <button
-            class="btn-qtd"
-            onclick="
-              alterarBotao(
-                ${produto.codigo},
-                '${produto.descricao}',
-                '${produto.custo}',
-                -1,
-                this
-              )
-            "
-          >
-            -
-          </button>
-
-          <input
-            class="qtd"
-            type="number"
-            min="0"
-            value="0"
-            readonly
-          >
-
-          <button
-            class="btn-qtd"
-            onclick="
-              alterarBotao(
-                ${produto.codigo},
-                '${produto.descricao}',
-                '${produto.custo}',
-                1,
-                this
-              )
-            "
-          >
-            +
-          </button>
-
-        </div>
-
-      </div>
 
     `;
-  });
 }
 
-function alterarBotao(
-  codigo,
-  descricao,
-  custo,
-  valor,
-  botao
-){
+async function carregarSistema() {
 
-  const container =
-    botao.parentElement;
+    const produtos =
+        await buscarProdutos();
 
-  const input =
-    container.querySelector(".qtd");
+    console.log(produtos);
 
-  let quantidade =
-    Number(input.value);
+    renderizarSistema(produtos);
 
-  quantidade += valor;
-
-  if (quantidade < 0) {
-    quantidade = 0;
-  }
-
-  input.value = quantidade;
-
-  alterarQuantidade(
-    codigo,
-    descricao,
-    custo,
-    quantidade
-  );
+    iniciarTimer();
 }
 
-function alterarQuantidade(
-  codigo,
-  descricao,
-  custo,
-  quantidade
-){
+function renderizarSistema(produtos) {
 
-  quantidade = Number(quantidade);
+    let htmlProdutos = "";
 
-  const existe = pedido.find(
-    p => p.codigo === codigo
-  );
+    produtos.forEach((produto, index) => {
 
-  if (quantidade <= 0) {
+        const especial =
+            produto.especial === "SIM"
+            "especial"
+            : "";
 
-    pedido = pedido.filter(
-      p => p.codigo !== codigo
-    );
+        htmlProdutos += `
 
-  } else {
+            <div class="produto ${especial}">
 
-    if (existe) {
+                <div>
 
-      existe.quantidade = quantidade;
+                    <div class="produto-nome">
+                        ${produto.nome}
+                    </div>
 
-    } else {
+                    <div class="produto-info">
+                        Cód: ${produto.codigo || ""}
+                        •
+                        R$ ${produto.preco || ""}
+                    </div>
 
-      pedido.push({
+                </div>
 
-        codigo,
-        descricao,
-        custo,
-        quantidade
+                <div class="controles">
 
-      });
-    }
-  }
+                    <button
+                        class="btn-qtd btn-menos"
+                        onclick="alterarQtd(${index}, -1)"
+                    >
+                        -
+                    </button>
 
-  atualizarResumo();
+                    <input
+                        class="qtd"
+                        id="qtd-${index}"
+                        value="0"
+                        readonly
+                    >
+
+                    <button
+                        class="btn-qtd"
+                        onclick="alterarQtd(${index}, 1)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+    });
+
+    document.getElementById("app").innerHTML = `
+
+        <div class="topo">
+
+            <h1>Pedidos FLV</h1>
+
+            <div class="loja-topo">
+                Loja: ${lojaAtual}
+            </div>
+
+            <div class="barra-timer">
+                <div
+                    class="barra"
+                    id="barraTimer"
+                ></div>
+            </div>
+
+            <div class="info-grid">
+
+                <div class="card-info">
+
+                    <div class="titulo-info">
+                        Tempo restante
+                    </div>
+
+                    <div
+                        class="tempo"
+                        id="timer"
+                    >
+                        02:30:00
+                    </div>
+
+                </div>
+
+                <div class="card-info">
+
+                    <div class="titulo-info">
+                        Pedido
+                    </div>
+
+                    <div
+                        class="pedido-info"
+                        id="resumoPedido"
+                    >
+                        0 itens • 0 volumes
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button
+                class="btn-finalizar"
+                onclick="finalizarPedido()"
+            >
+                FINALIZAR PEDIDO
+            </button>
+
+        </div>
+
+        ${htmlProdutos}
+
+    `;
+}
+
+function alterarQtd(index, valor) {
+
+    const input =
+        document.getElementById(`qtd-${index}`);
+
+    let qtd =
+        Number(input.value);
+
+    qtd += valor;
+
+    if (qtd < 0) qtd = 0;
+
+    input.value = qtd;
+
+    atualizarResumo();
 }
 
 function atualizarResumo() {
 
-  const totalItens = pedido.length;
+    let totalItens = 0;
 
-  let volumes = 0;
+    let totalVolumes = 0;
 
-  pedido.forEach(item => {
+    const inputs =
+        document.querySelectorAll(".qtd");
 
-    volumes += item.quantidade;
+    inputs.forEach(input => {
 
-  });
+        const qtd =
+            Number(input.value);
 
-  document.getElementById(
-    "totalItens"
-  ).innerText =
-    `${totalItens} itens`;
+        if (qtd > 0) {
 
-  document.getElementById(
-    "totalVolumes"
-  ).innerText =
-    `${volumes} volumes`;
+            totalItens++;
+
+            totalVolumes += qtd;
+        }
+    });
+
+    document.getElementById(
+        "resumoPedido"
+    ).innerText =
+
+        `${totalItens} itens • ${totalVolumes} volumes`;
 }
 
-function abrirConferencia() {
+function finalizarPedido() {
 
-  if (pedido.length === 0) {
-
-    alert("Adicione itens");
-
-    return;
-  }
-
-  const modal =
-    document.getElementById("modal");
-
-  let html = "";
-
-  pedido.forEach(item => {
-
-    html += `
-
-      <div class="linha-conferencia">
-
-        <span>${item.descricao}</span>
-
-        <strong>${item.quantidade}</strong>
-
-      </div>
-
-    `;
-  });
-
-  modal.innerHTML = `
-
-    <div class="overlay">
-
-      <div class="modal-box">
-
-        <h2>Conferir Pedido</h2>
-
-        ${html}
-
-        <button
-          class="btn-confirmar"
-          onclick="confirmarPedido()"
-        >
-          CONFIRMAR PEDIDO
-        </button>
-
-        <button
-          class="btn-cancelar"
-          onclick="fecharModal()"
-        >
-          CANCELAR
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
-}
-
-function fecharModal() {
-
-  document.getElementById(
-    "modal"
-  ).innerHTML = "";
-}
-
-async function confirmarPedido() {
-
-  alert("Pedido enviado!");
-
-  pedido = [];
-
-  fecharModal();
-
-  mostrarLogin();
+    alert("Pedido enviado com sucesso 😄");
 }
 
 function iniciarTimer() {
 
-  let tempo =
-    2 * 60 * 60 + 30 * 60;
+    let tempo =
+        2 * 60 * 60 + 30 * 60;
 
-  const timer =
-    document.getElementById("timer");
+    const timer =
+        document.getElementById("timer");
 
-  setInterval(() => {
+    const barra =
+        document.getElementById("barraTimer");
 
-    const horas =
-      String(
-        Math.floor(tempo / 3600)
-      ).padStart(2, "0");
+    const total =
+        tempo;
 
-    const minutos =
-      String(
-        Math.floor(
-          (tempo % 3600) / 60
-        )
-      ).padStart(2, "0");
+    setInterval(() => {
 
-    const segundos =
-      String(
-        tempo % 60
-      ).padStart(2, "0");
+        const horas =
+            String(
+                Math.floor(tempo / 3600)
+            ).padStart(2, "0");
 
-    timer.innerText =
-      `${horas}:${minutos}:${segundos}`;
+        const minutos =
+            String(
+                Math.floor(
+                    (tempo % 3600) / 60
+                )
+            ).padStart(2, "0");
 
-    tempo--;
+        const segundos =
+            String(
+                tempo % 60
+            ).padStart(2, "0");
 
-  }, 1000);
+        timer.innerText =
+            `${horas}:${minutos}:${segundos}`;
+
+        const porcentagem =
+            (tempo / total) * 100;
+
+        barra.style.width =
+            porcentagem + "%";
+
+        tempo--;
+
+    }, 1000);
 }
+
+mostrarLogin();
