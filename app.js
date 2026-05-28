@@ -77,8 +77,8 @@ function renderizarSistema(produtos) {
 
         const especial =
             produto.especial === "SIM"
-            "especial"
-            : "";
+              ? "especial"
+              : "";
 
         htmlProdutos += `
 
