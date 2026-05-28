@@ -76,7 +76,7 @@ function renderizarSistema(produtos) {
     produtos.forEach((produto, index) => {
 
         const especial =
-            produto.especial === "SIM"
+            produto.especial === "Tabloide Rede"
               ? "especial"
               : "";
 
