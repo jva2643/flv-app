@@ -59,15 +59,51 @@ function mostrarLogin() {
 
 async function carregarSistema() {
 
-    const produtos =
-        await buscarProdutos();
+    try {
 
-    console.log(produtos);
+        const produtos =
+            await buscarProdutos();
 
-    renderizarSistema(produtos);
+        console.log("PRODUTOS:", produtos);
+        console.log("TIPO:", typeof produtos);
+        console.log("É ARRAY?", Array.isArray(produtos));
 
-    iniciarTimer();
+        if (!produtos) {
+
+            alert("Produtos undefined");
+
+            return;
+        }
+
+        if (!Array.isArray(produtos)) {
+
+            alert(
+                "Produtos não é array"
+            );
+
+            console.log(produtos);
+
+            return;
+        }
+
+        renderizarSistema(produtos);
+
+        iniciarTimer();
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert(
+            "Erro ao carregar produtos"
+        );
+    }
 }
+
+console.log(
+    "Recebido em renderizarSistema:",
+    produtos
+);
 
 function renderizarSistema(produtos) {
 
