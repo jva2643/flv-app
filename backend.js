@@ -1,7 +1,6 @@
 async function buscarProdutos() {
 
   const url =
-
     "https://script.google.com/macros/s/AKfycbz2yTXhq0GphEfVZK4N821kvPAuk5FB8mS-WiZlP7hkuO1SbIXc1SJn9sCyktsjPDCy/exec";
 
   try {
@@ -9,10 +8,10 @@ async function buscarProdutos() {
     const resposta =
       await fetch(url);
 
-    const produtos =
+    const dados =
       await resposta.json();
 
-    return produtos;
+    return dados.produtos || [];
 
   } catch (erro) {
 

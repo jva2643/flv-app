@@ -171,8 +171,8 @@ body{
 }
 
 .produto.especial{
-    background:#fff4b8;
-    border-left:8px solid #facc15;
+    background:#fff176;
+    border-left:10px solid #fbc02d;
 }
 
 .produto-nome{
@@ -321,25 +321,60 @@ body{
 @media(max-width:600px){
 
     body{
-        padding:10px;
+        padding:8px;
+    }
+
+    .topo{
+        padding:14px;
+        border-radius:16px;
     }
 
     .topo h1{
-        font-size:28px;
+        font-size:22px;
+    }
+
+    .loja-topo{
+        font-size:14px;
+        margin-bottom:10px;
+    }
+
+    .tempo,
+    .pedido-info{
+        font-size:18px;
+    }
+
+    .card-info{
+        padding:12px;
+    }
+
+    .btn-finalizar{
+        padding:14px;
+        font-size:18px;
     }
 
     .produto{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:15px;
-    }
-
-    .controles{
-        width:100%;
-        justify-content:flex-end;
+        padding:14px;
+        margin-bottom:10px;
+        border-radius:16px;
     }
 
     .produto-nome{
+        font-size:18px;
+    }
+
+    .produto-info{
+        font-size:12px;
+    }
+
+    .btn-qtd{
+        width:46px;
+        height:46px;
+        font-size:24px;
+    }
+
+    .qtd{
+        width:60px;
+        height:46px;
         font-size:20px;
     }
 

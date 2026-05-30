@@ -76,9 +76,11 @@ function renderizarSistema(produtos) {
     produtos.forEach((produto, index) => {
 
         const especial =
-            produto.especie === "Tabloide Rede"
-              ? "especial"
-              : "";
+            (produto.especie || "")
+              .toUpperCase()
+              .includes("TABLOIDE")
+                ? "especial"
+                : "";
 
         htmlProdutos += `
 
@@ -87,13 +89,13 @@ function renderizarSistema(produtos) {
                 <div>
 
                     <div class="produto-nome">
-                        ${produto.nome}
+                        ${produto.descricao}
                     </div>
 
                     <div class="produto-info">
                         Cód: ${produto.codigo || ""}
                         •
-                        R$ ${produto.preco || ""}
+                        R$ ${produto.custo || ""}
                     </div>
 
                 </div>
