@@ -171,8 +171,8 @@ body{
 }
 
 .produto.especial{
-    background:#fff176;
-    border-left:10px solid #fbc02d;
+    background:#fff59d;
+    border-left:12px solid #fbc02d;
 }
 
 .produto-nome{
@@ -321,64 +321,73 @@ body{
 @media(max-width:600px){
 
     body{
-        padding:8px;
+        padding:6px;
     }
 
     .topo{
-        padding:14px;
-        border-radius:16px;
+        padding:12px;
+        border-radius:14px;
+        margin-bottom:10px;
     }
 
     .topo h1{
-        font-size:22px;
+        font-size:20px;
     }
 
     .loja-topo{
-        font-size:14px;
-        margin-bottom:10px;
+        font-size:13px;
+        margin-bottom:8px;
+    }
+
+    .barra-timer{
+        height:12px;
+    }
+
+    .card-info{
+        padding:10px;
     }
 
     .tempo,
     .pedido-info{
-        font-size:18px;
-    }
-
-    .card-info{
-        padding:12px;
+        font-size:16px;
     }
 
     .btn-finalizar{
-        padding:14px;
-        font-size:18px;
+        padding:12px;
+        font-size:16px;
+        margin-top:10px;
     }
 
     .produto{
-        padding:14px;
-        margin-bottom:10px;
-        border-radius:16px;
+        padding:10px;
+        margin-bottom:8px;
+        border-radius:14px;
     }
 
     .produto-nome{
-        font-size:18px;
+        font-size:16px;
+        font-weight:700;
     }
 
     .produto-info{
-        font-size:12px;
+        font-size:11px;
     }
 
     .btn-qtd{
-        width:46px;
-        height:46px;
-        font-size:24px;
+        width:42px;
+        height:42px;
+        font-size:22px;
+        border-radius:12px;
     }
 
     .qtd{
-        width:60px;
-        height:46px;
-        font-size:20px;
+        width:50px;
+        height:42px;
+        font-size:18px;
     }
 
     .info-grid{
         grid-template-columns:1fr;
+        gap:8px;
     }
 }
