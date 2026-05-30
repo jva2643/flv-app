@@ -103,10 +103,12 @@ async function carregarSistema() {
 function renderizarSistema(produtos) {
 
     console.log(
-        "Recebido em renderizarSistema:",
-        produtos
-    );
+        "Recebido em renderizarSistema:", produtos);
 
+    console.log("PRIMEIRO PRODUTO:");
+    console.log(produtos[0]);
+    
+       
     let htmlProdutos = "";
 
     produtos.forEach((produto, index) => {
