@@ -103,7 +103,7 @@ async function carregarSistema() {
 console.log(
     "Recebido em renderizarSistema:",
     produtos
-);
+)
 
 function renderizarSistema(produtos) {
 
