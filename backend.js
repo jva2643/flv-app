@@ -11,7 +11,7 @@ async function buscarProdutos() {
 
     console.log("DADOS:", dados);
 
-    return dados.produtos || [];
+    return dados || [];
 
   } catch (erro) {
 
