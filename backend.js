@@ -5,11 +5,11 @@ async function buscarProdutos() {
 
   try {
 
-    const resposta = await fetch(url);
+    const dados = await resposta.text();
 
-    const dados = await resposta.json();
+    console.log("RETORNO:", dados);
 
-    return dados.produtos;
+    return [];
 
   } catch (erro) {
 
