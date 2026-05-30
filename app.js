@@ -100,24 +100,25 @@ async function carregarSistema() {
     }
 }
 
+function renderizarSistema(produtos) {
+
+
 console.log(
     "Recebido em renderizarSistema:",
     produtos
-)
+);
 
-function renderizarSistema(produtos) {
+let htmlProdutos = "";
 
-    let htmlProdutos = "";
+produtos.forEach((produto, index) => {
 
-    produtos.forEach((produto, index) => {
+    const especial =
+        produto.especie &&
+        produto.especie.includes("Tabloide")
+          ? "especial"
+          : "";
 
-        const especial =
-            produto.especie &&
-            produto.especie.includes("Tabloide")
-              ? "especial"
-              : "";
-
-        htmlProdutos += `
+    htmlProdutos += `
 
             <div class="produto ${especial}">
 
