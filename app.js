@@ -76,11 +76,10 @@ function renderizarSistema(produtos) {
     produtos.forEach((produto, index) => {
 
         const especial =
-            (produto.especie || "")
-              .toUpperCase()
-              .includes("TABLOIDE")
-                ? "especial"
-                : "";
+            produto.especie &&
+            produto.especie.includes("Tabloide")
+              ? "especial"
+              : "";
 
         htmlProdutos += `
 
