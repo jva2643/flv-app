@@ -1,7 +1,7 @@
 async function buscarProdutos() {
 
   const url =
-    "https://script.google.com/macros/s/AKfycbz2yTXhq0GphEfVZK4N821kvPAuk5FB8mS-WiZlP7hkuO1SbIXc1SJn9sCyktsjPDCy/exec";
+    "https://script.google.com/macros/s/AKfycbw1V0ga-B1rXoqnBWNHJljH0o4IXK6hdsxucOfQ26mrdAYjmoWNrK2akbeWQIiziiJ3/exec";
 
   try {
 
@@ -11,10 +11,7 @@ async function buscarProdutos() {
 
     console.log("DADOS:", dados);
 
-    console.log("PRODUTOS RECEBIDOS:", dados);
-    console.log("PRIMEIRO:", dados[0]);
-
-    return dados || [];
+        return dados || [];
 
   } catch (erro) {
 

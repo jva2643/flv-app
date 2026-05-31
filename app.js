@@ -114,13 +114,9 @@ function renderizarSistema(produtos) {
     produtos.forEach((produto, index) => {
 
         console.log(produto);
-        console.log("ESPECIE:", produto.especie);
-        console.log("TODAS AS CHAVES:", Object.keys(produto));
-    
-    
+            
         const especial =
-            produto.especie &&
-            produto.especie.includes("Tabloide")
+            produto.especial
                 ? "especial"
                 : "";
 
