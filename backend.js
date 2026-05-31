@@ -11,7 +11,10 @@ async function buscarProdutos() {
 
     console.log("DADOS:", dados);
 
-    return dados || [];
+    console.log("PRODUTOS RECEBIDOS:", dados.produtos);
+    console.log("PRIMEIRO:", dados.produtos[0]);
+
+    return dados.produtos || [];
 
   } catch (erro) {
 
