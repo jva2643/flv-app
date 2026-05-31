@@ -11,10 +11,10 @@ async function buscarProdutos() {
 
     console.log("DADOS:", dados);
 
-    console.log("PRODUTOS RECEBIDOS:", dados.produtos);
-    console.log("PRIMEIRO:", dados.produtos[0]);
+    console.log("PRODUTOS RECEBIDOS:", dados);
+    console.log("PRIMEIRO:", dados[0]);
 
-    return dados.produtos || [];
+    return dados || [];
 
   } catch (erro) {
 
